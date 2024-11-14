@@ -13,4 +13,8 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "journal_account", referencedColumnName = "id")
     private UserJournalAccount journalAccount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "messenger_account", referencedColumnName = "id")
+    private UserMessengerAccount messengerAccount;
 }
