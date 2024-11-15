@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.5'
     id 'io.spring.dependency-management' version '1.1.6'
-
 }
 
 group = 'ru.journalplus'
@@ -21,15 +20,18 @@ repositories {
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     implementation group: 'org.hibernate.orm', name: 'hibernate-core', version: '6.6.2.Final'
-    implementation group: 'org.hibernate.orm', name: 'hibernate-envers', version: '6.0.0.Final'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'io.github.cdimascio:dotenv-java:3.0.2'
+    implementation group: 'org.hibernate.orm', name: 'hibernate-envers', version: '6.6.2.Final'
+    implementation 'io.smallrye:jandex:3.2.3'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.3.5'
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     implementation 'org.postgresql:postgresql:42.7.4'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.3.5'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.3.5'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.5'
     implementation 'org.projectlombok:lombok:1.18.34'
-    implementation 'org.liquibase:liquibase-core:4.26.0'
-    implementation 'org.liquibase.ext:liquibase-hibernate5:4.26.0'
+    implementation 'org.liquibase:liquibase-core:4.30.0'
+    implementation 'org.liquibase.ext:liquibase-hibernate6:4.30.0'
+    runtimeOnly 'org.postgresql:postgresql:42.7.4'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose:3.3.5'
     developmentOnly 'org.springframework.boot:spring-boot-devtools:3.3.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
