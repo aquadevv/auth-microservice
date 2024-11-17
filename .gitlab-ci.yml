@@ -1,0 +1,33 @@
+stages:
+  - build
+  - test
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+before_script:
+  - chmod +x ./gradlew
+
+build:
+  stage: build
+  script:
+    - "./gradlew clean build -x test"
+  artifacts:
+    paths:
+      - build/libs/*jar
+    expire_in: 1 week
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    reports:
+      junit: build/test-results/test/
