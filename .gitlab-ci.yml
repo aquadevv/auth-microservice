@@ -17,6 +17,8 @@ before_script:
 
 build:
   stage: build
+  tags:
+    - linux
   script:
     - "./gradlew clean build -x test"
   artifacts:
@@ -26,6 +28,8 @@ build:
 
 test:
   stage: test
+  tags:
+    - linux
   script:
     - ./gradlew test
   artifacts:
