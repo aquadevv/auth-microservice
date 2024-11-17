@@ -4,18 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
-@Table(name = "user_journal_accounts")
-public class UserJournalAccount {
+@Table(name = "user_messenger_accounts")
+public class UserMessengerAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String password;
-    private boolean valid;
-
+    private Long UserMessengerId;
 }
