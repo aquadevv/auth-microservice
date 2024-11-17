@@ -20,7 +20,7 @@ public class JournalRepositoryTests {
     @BeforeEach
     public void setUp() {
         userJournalAccount = new UserJournalAccount();
-        userJournalAccount.setUsername("DimaShagahodov");
+        userJournalAccount.setUsername("DimaShagahod");
         userJournalAccount.setPassword("SVOZOV");
         userJournalAccount.setValid(true);
     }
