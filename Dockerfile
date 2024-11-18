@@ -1,7 +1,7 @@
 # Используем базовый образ с установленной Java
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-alpine
 
-RUN apt-get update && apt-get install -y findutils
+RUN apk update && apk add findutils
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
