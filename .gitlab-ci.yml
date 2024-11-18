@@ -1,40 +1,14 @@
-image: openjdk:17-jdk-slim
-
 stages:
   - build
   - test
-
-variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
-before_script:
-  - apt-get update && apt-get install -y findutils
-  - find --version
-  - chmod +x ./gradlew
-
+  
 build-job:
   stage: build
-  tags:
-    - linux
   script:
-    - "./gradlew clean build -x test"
-  artifacts:
-    paths:
-      - build/libs/*jar
-    expire_in: 1 week
+    - docker build -t journalplus-image .
 
-test:
+test-job:
   stage: test
-  tags:
-    - linux
   script:
-    - ./gradlew test
-  artifacts:
-    reports:
-      junit: build/test-results/test/
+    - docker run --rm journalplus-image ./gradlew test
+

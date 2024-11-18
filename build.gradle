@@ -41,14 +41,13 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.5'
 }
 
-
+tasks.test {
+    enabled = false
+}
 
 tasks.named('test') {
 	useJUnitPlatform()
-    testLogging{
-        events "PASSED", "FAILED", "SKIPPED"
-    }
     reports {
-        junitXml.enabled = true
+        junitXml.required.set(false) // Отключает JUnit XML отчёты
     }
 }

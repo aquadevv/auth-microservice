@@ -1,14 +1,15 @@
-# Используем базовый образ Java на основе Ubuntu/Debian
-FROM openjdk:17-jdk-slim
+FROM gradle:8.11-jdk17 AS build
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем скомпилированный JAR файл в образ
-COPY build/libs/app.jar app.jar
+COPY . .
 
-# Указываем, что приложение будет слушать на порту 8088
-EXPOSE 8088
+RUN gradle build
 
-# Устанавливаем точку входа для запуска приложения
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
