@@ -19,22 +19,6 @@ before_script:
   - find --version
   - chmod +x ./gradlew
 
-setup_postgres:
-  stage: setup
-  image: postgres:latest
-  tags:
-    - linux
-  services:
-    - name: postgres:latest
-      alias: db
-  variables:
-    POSTGRES_USER: root
-    POSTGRES_PASSWORD: rootroot
-    PGPASSWORD: rootroot
-  script:
-    - until pg_isready -h db -p 5432; do sleep 1; done
-    - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
-
 
 build-job:
   stage: build
@@ -49,10 +33,17 @@ build-job:
   only:
     - main
 
-test:
+setup-postgres-and-test:
   stage: test
-  tags:
-    - linux
+  image: postgres:latest
+  services:
+    - name: postgres:latest
+      alias: db
+  variables:
+    POSTGRES_USER: root
+    POSTGRES_PASSWORD: rootroot
+    PGPASSWORD: rootroot
   script:
-    - export $(cat .env)
+    - until pg_isready -h db -p 5432; do sleep 1; done
+    - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
     - ./gradlew test
