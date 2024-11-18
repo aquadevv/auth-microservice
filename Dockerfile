@@ -1,5 +1,5 @@
 # Используем базовый образ с установленной Java
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk
 
 RUN apk update && apk add findutils
 
