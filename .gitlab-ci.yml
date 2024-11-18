@@ -4,14 +4,15 @@ stages:
 
 before_script:
   - echo "Checking if .env file exists..."
-  - ls -l .env
-  - cp $ENV_FILE .env
+  - ls -l $ENV_FILE  # Проверяем, что файл доступен
+  - cp $ENV_FILE .env  # Копируем файл в рабочую директорию
+
 build-job:
   stage: build
   script:
-    - docker build -t journalplus-image .
+    - docker build -t journalplus-image .  # Собираем образ
 
 test-job:
   stage: test
   script:
-    - docker run --rm -v $(pwd)/.env:/app/.env journalplus-image ./gradlew test
+    - docker run --rm -v $(pwd)/.env:/app/.env journalplus-image ./gradlew test  # Монтируем .env в контейнер
