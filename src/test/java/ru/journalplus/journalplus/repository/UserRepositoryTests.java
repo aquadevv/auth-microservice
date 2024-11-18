@@ -5,11 +5,12 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.journalplus.journalplus.config.TestConfig;
 import ru.journalplus.journalplus.model.User;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
-@SpringBootTest
+@SpringBootTest(classes = TestConfig.class)
 @Transactional
 public class UserRepositoryTests {
 
