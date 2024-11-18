@@ -5,14 +5,9 @@ stages:
 build-job:
   stage: build
   script:
-    - mkdir -p secure_files
-    - ci-secure-file download .env secure_files/.env
-    - docker build --env-file secure_files/.env -t journalplus-image .
+    - docker build -t journalplus-image .
 
 test-job:
   stage: test
   script:
-    - mkdir -p secure_files
-    - ci-secure-file download .env secure_files/.env
-    - docker run --rm --env-file secure_files/.env journalplus-image ./gradlew test
-    - rm -rf secure_files
+    - docker run --rm journalplus-image ./gradlew test
