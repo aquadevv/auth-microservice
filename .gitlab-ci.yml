@@ -2,17 +2,20 @@ stages:
   - build
   - test
 
+before_script:
+  - test -f "${PRODUCTION_ENV_FILE}" && echo "Файл существует" || echo "Файл не существует"
+  - cp "$ENV_FILE" .env
+  - cat .env
+
 build-job:
   stage: build
   script:
-    - cat "$ENV_FILE" > .env
+    - cat .env
     - docker build -t journalplus-image .
 
 test-job:
   stage: test
   script:
-    - echo "$ENV_FILE"
-    - echo "$ENV_FILE_BASE64" | base64 -d > .env
     - docker-compose up postgres -d
     - docker run --rm --env-file .env journalplus-image ./gradlew test
     - docker-compose down
