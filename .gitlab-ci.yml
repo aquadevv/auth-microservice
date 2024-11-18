@@ -2,7 +2,6 @@ image: openjdk:17-jdk-slim
 
 stages:
   - build
-  - setup
   - test
 
 variables:
@@ -35,7 +34,7 @@ build-job:
 
 setup-postgres-and-test:
   stage: test
-  image: postgres:latest
+  image: postgres:latest, openjdk:17-jdk-slim
   tags:
     - linux
   services:
