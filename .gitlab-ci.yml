@@ -19,9 +19,11 @@ before_script:
   - find --version
   - chmod +x ./gradlew
 
-setup_postgres:
+setup-postgres:
   stage: setup
   image: docker:20.10.16
+  tags:
+    - linux
   services:
     - name: postgres:latest
       alias: db
