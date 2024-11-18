@@ -2,6 +2,7 @@ image: openjdk:17-jdk-slim
 
 stages:
   - build
+  - setup
   - test
 
 variables:
@@ -17,6 +18,18 @@ before_script:
   - apt-get update && apt-get install -y findutils
   - find --version
   - chmod +x ./gradlew
+
+setup_postgres:
+  stage: setup
+  image: docker:20.10.16
+  services:
+    - name: postgres:latest
+      alias: db
+  script:
+    - docker info
+    - docker-compose up -d
+  only:
+    - master
 
 build-job:
   stage: build
@@ -34,6 +47,7 @@ test:
   tags:
     - linux
   script:
+    - export $(cat .env | xargs)
     - ./gradlew test
   artifacts:
     reports:
