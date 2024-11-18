@@ -1,8 +1,7 @@
 # Используем базовый образ с установленной Java
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-slim
 
-RUN microdnf install findutils
-RUN apk update && apk add findutils
+RUN apt-get update && apt-get install -y findutils
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
