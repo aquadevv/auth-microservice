@@ -36,6 +36,8 @@ build-job:
 setup-postgres-and-test:
   stage: test
   image: postgres:latest
+  tags:
+    - linux
   services:
     - name: postgres:latest
       alias: db
