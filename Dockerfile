@@ -1,6 +1,9 @@
 # Используем базовый образ с установленной Java
 FROM openjdk:17-jdk
 
+
+RUN apt-get update && apt-get install -y findutils
+
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
