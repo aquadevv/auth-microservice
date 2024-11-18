@@ -5,14 +5,14 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.journalplus.journalplus.config.TestConfig;
+import ru.journalplus.journalplus.BaseTest;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
 import java.util.Optional;
 
-@SpringBootTest(classes = TestConfig.class)
+@SpringBootTest
 @Transactional
-public class MessengerRepositoryTests {
+public class MessengerRepositoryTests extends BaseTest {
 
     @Autowired
     private MessengerRepository messengerRepository;

@@ -4,14 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN gradle build --no-daemon
+RUN gradle build
 
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
 COPY --from=build /app/build/libs/*.jar app.jar
-
-EXPOSE 8088
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

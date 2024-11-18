@@ -5,15 +5,13 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import ru.journalplus.journalplus.config.TestConfig;
+import ru.journalplus.journalplus.BaseTest;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 
-@SpringBootTest(classes = TestConfig.class)
+@SpringBootTest
 @Transactional
-public class JournalRepositoryTests {
+public class JournalRepositoryTests extends BaseTest {
 
     @Autowired
     private JournalRepository journalRepository;
