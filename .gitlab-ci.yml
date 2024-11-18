@@ -6,7 +6,7 @@ stages:
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk"
+  JAVA_HOME: "/usr/local/openjdk-17"
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -15,6 +15,7 @@ cache:
     - .gradle/caches
 
 before_script:
+  - ls -l $JAVA_HOME
   - chmod +x ./gradlew
 
 build-job:
