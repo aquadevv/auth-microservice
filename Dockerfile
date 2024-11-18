@@ -3,6 +3,7 @@ FROM gradle:8.11-jdk17 AS build
 WORKDIR /app
 
 COPY . .
+COPY .env .env
 
 RUN gradle build
 
