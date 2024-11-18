@@ -4,8 +4,6 @@ stages:
 
 build-job:
   stage: build-job
-  tags:
-    - linux
   services:
     - docker:dind
   script:
@@ -14,8 +12,6 @@ build-job:
 
 test-job:
   stage: test
-  tags:
-    - linux
   services:
     - name: postgres:latest
       alias: db
