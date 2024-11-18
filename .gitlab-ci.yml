@@ -14,7 +14,8 @@ cache:
     - .gradle/caches
 
 before_script:
-  - ls -l $JAVA_HOME
+  - apt-get update && apt-get install -y findutils
+  - xargs --version
   - chmod +x ./gradlew
 
 build-job:
