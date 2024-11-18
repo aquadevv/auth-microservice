@@ -45,10 +45,7 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-    testLogging{
-        events "PASSED", "FAILED", "SKIPPED"
-    }
     reports {
-        junitXml.enabled = true
+        junitXml.required.set(false) // Отключает JUnit XML отчёты
     }
 }
