@@ -6,12 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.journalplus.journalplus.BaseTest;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 
 @SpringBootTest
 @Transactional
-public class JournalRepositoryTests extends BaseTest {
+public class JournalRepositoryTests {
 
     @Autowired
     private JournalRepository journalRepository;
