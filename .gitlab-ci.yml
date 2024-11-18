@@ -15,4 +15,5 @@ build-job:
 test-job:
   stage: test
   script:
-    - docker run --rm -v $(pwd)/.env:/app/.env journalplus-image ./gradlew test  # Монтируем .env в контейнер
+    - docker run --rm -v $(pwd)/.env:/app/.env:ro journalplus-image ./gradlew test
+
