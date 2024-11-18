@@ -10,13 +10,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JournalPlusApplication {
 
     public static void main(String[] args) {
-        Dotenv dotenv = Dotenv.load();
-
-        for (DotenvEntry entry : dotenv.entries()) {
-            System.setProperty(entry.getKey(), entry.getValue());
-        }
-
+        loadEnvironmentVariables();
         SpringApplication.run(JournalPlusApplication.class, args);
     }
 
+    private static void loadEnvironmentVariables() {
+        Dotenv dotenv = null;
+
+        try {
+            dotenv = Dotenv.load();
+        } catch (Exception e) {
+            System.out.println(".env file not found, proceeding without it.");
+        }
+
+        if (dotenv != null) {
+            for (DotenvEntry entry : dotenv.entries()) {
+                System.setProperty(entry.getKey(), entry.getValue());
+            }
+        }
+    }
 }
