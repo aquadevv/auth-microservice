@@ -5,6 +5,7 @@ stages:
 build-job:
   stage: build
   script:
+    - cat "$ENV_FILE" > .env
     - docker build -t journalplus-image .
 
 test-job:
