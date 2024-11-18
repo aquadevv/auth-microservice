@@ -30,6 +30,7 @@ setup_postgres:
   variables:
     POSTGRES_USER: root
     POSTGRES_PASSWORD: rootroot
+    PGPASSWORD: rootroot
   script:
     - until pg_isready -h db -p 5432; do sleep 1; done
     - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
