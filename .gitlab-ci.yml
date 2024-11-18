@@ -28,8 +28,8 @@ setup_postgres:
   script:
     - docker info
     - docker-compose up -d
-  only:
-    - master
+    - until pg_isready -h db -p 5432; do sleep 1; done
+    - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
 
 build-job:
   stage: build
