@@ -6,6 +6,8 @@ build-job:
   stage: build-job
   tags:
     - linux
+  services:
+    - docker:dind
   script:
     - docker build -t journal-plus:latest
     - docker run
@@ -22,3 +24,6 @@ test-job:
     - echo "Running tests..."
     - docker run --rm --network host -e DB_HOST=db -e DB_PORT=5432 -e DB_USER=$DB_USER -e DB_PASSWORD=$DB_PASSWORD -e DB_NAME=$DB_NAME journal-plus:latest ./gradlew test
     - echo "Tests completed."
+
+after_script:
+  - docker system prune -af
