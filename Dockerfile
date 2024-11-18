@@ -1,7 +1,5 @@
-# Используем базовый образ с установленной Java
+# Используем базовый образ Java на основе Ubuntu/Debian
 FROM openjdk:17-jdk
-
-RUN apk update && apk add findutils
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
