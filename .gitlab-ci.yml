@@ -10,4 +10,6 @@ build-job:
 test-job:
   stage: test
   script:
-    - docker run --rm journalplus-image ./gradlew test
+    - mkdir -p /tmp/secure_files
+    - cp /builds/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}/.env /tmp/secure_files/.env
+    - docker run --rm -v /tmp/secure_files/.env:/app/.env journalplus-image ./gradlew test
