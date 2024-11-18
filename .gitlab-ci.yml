@@ -5,9 +5,12 @@ stages:
 build-job:
   stage: build
   script:
+    - echo "Downloading secure .env file..."
+    - curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --output .env "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/secure_files/.env"
     - docker build -t journalplus-image .
 
 test-job:
   stage: test
   script:
-    - docker run --rm journalplus-image ./gradlew test
+    - echo "Running tests in Docker container..."
+    - docker run --rm --env-file .env journalplus-image ./gradlew test
