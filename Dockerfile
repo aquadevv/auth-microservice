@@ -1,5 +1,5 @@
 # Используем базовый образ с установленной Java
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jdk
 
 RUN apt-get update && apt-get install -y findutils
 
