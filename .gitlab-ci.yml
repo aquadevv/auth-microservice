@@ -3,7 +3,7 @@ stages:
   - test
 
 before_script:
-  - test -f "${PRODUCTION_ENV_FILE}" && echo "Файл существует" || echo "Файл не существует"
+  - test -f "${ENV_FILE}" && echo "Файл существует" || echo "Файл не существует"
   - cp "$ENV_FILE" .env
   - cat .env
 
