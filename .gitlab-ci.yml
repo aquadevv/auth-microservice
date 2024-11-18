@@ -5,13 +5,14 @@ stages:
 build-job:
   stage: build
   script:
-    - echo "Downloading secure files..."
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
-    - download-secure-files
-    - docker build -t journalplus-image .
+    - mkdir -p secure_files
+    - ci-secure-file download .env secure_files/.env
+    - docker build --env-file secure_files/.env -t journalplus-image .
 
 test-job:
   stage: test
   script:
-    - echo "Running tests in Docker container..."
-    - docker run --rm --env-file .secure_files/.env journalplus-image ./gradlew test
+    - mkdir -p secure_files
+    - ci-secure-file download .env secure_files/.env
+    - docker run --rm --env-file secure_files/.env journalplus-image ./gradlew test
+    - rm -rf secure_files
