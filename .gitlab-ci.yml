@@ -1,9 +1,9 @@
 stages:
-  - build-job
+  - build
   - test
 
 build-job:
-  stage: build-job
+  stage: build
   script:
     - docker build -t journalplus-image .
 
