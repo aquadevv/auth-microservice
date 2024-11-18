@@ -16,6 +16,6 @@ build-job:
 test-job:
   stage: test
   script:
-    - docker-compose up postgres -d
+    - docker-compose up postgresql -d
     - docker run --rm --env-file .env journalplus-image ./gradlew test
-    - docker-compose down
+    - docker-compose down -v
