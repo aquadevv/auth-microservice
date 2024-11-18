@@ -1,3 +1,5 @@
+image: openjdk:17-jdk-slim
+
 stages:
   - build
   - test

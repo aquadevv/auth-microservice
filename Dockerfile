@@ -1,5 +1,5 @@
 # Используем базовый образ Java на основе Ubuntu/Debian
-FROM openjdk:17-jdk
+FROM openjdk:17-jdk-slim
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
