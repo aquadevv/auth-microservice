@@ -19,7 +19,7 @@ before_script:
   - find --version
   - chmod +x ./gradlew
 
-setup-postgres:
+setup_postgres:
   stage: setup
   image: docker:20.10.16
   tags:
@@ -27,9 +27,12 @@ setup-postgres:
   services:
     - name: postgres:latest
       alias: db
+      command: ["postgres", "-c", "listen_addresses='*'"]
+      environment:
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: rootroot
   script:
     - docker info
-    - docker-compose up -d
     - until pg_isready -h db -p 5432; do sleep 1; done
     - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
 
@@ -43,6 +46,8 @@ build-job:
     paths:
       - build/libs/*jar
     expire_in: 1 week
+  only:
+    - main
 
 test:
   stage: test
