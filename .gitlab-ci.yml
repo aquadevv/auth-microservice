@@ -7,7 +7,7 @@ build-job:
   services:
     - docker:dind
   script:
-    - docker build -t journal-plus:latest
+    - docker build -t journal-plus:latest .
     - docker run
 
 test-job:
