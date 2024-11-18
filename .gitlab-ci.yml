@@ -6,6 +6,10 @@ stages:
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  DB_NAME: journal_plus_db
+  DB_USER: root
+  DB_PASSWORD: rootroot
+  DB_PORT: 5432
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -17,6 +21,8 @@ before_script:
   - apt-get update && apt-get install -y findutils
   - find --version
   - chmod +x ./gradlew
+
+
 
 
 build-job:
@@ -34,17 +40,15 @@ build-job:
 
 setup-postgres-and-test:
   stage: test
-  image: postgres:latest, openjdk:17-jdk-slim
   tags:
     - linux
+  image: docker:latest
   services:
-    - name: postgres:latest
-      alias: db
-  variables:
-    POSTGRES_USER: root
-    POSTGRES_PASSWORD: rootroot
-    PGPASSWORD: rootroot
+    - docker:dind
+  before_script:
+    - docker-compose up -d
+    - until docker exec database_postgres pg_isready; do sleep 1; done
   script:
-    - until pg_isready -h db -p 5432; do sleep 1; done
-    - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
     - ./gradlew test
+  after_script:
+    - docker-compose down
