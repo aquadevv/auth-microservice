@@ -21,7 +21,7 @@ before_script:
 
 setup_postgres:
   stage: setup
-  image: docker:20.10.16
+  image: postgres:latest
   tags:
     - linux
   services:
@@ -31,9 +31,9 @@ setup_postgres:
     POSTGRES_USER: root
     POSTGRES_PASSWORD: rootroot
   script:
-    - docker run --name postgres -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -d -p 5432:5432 postgres:latest
     - until pg_isready -h db -p 5432; do sleep 1; done
-    - psql -h db -U $POSTGRES_USER -c "CREATE DATABASE journal_plus_db;"
+    - psql -h db -U root -c "CREATE DATABASE journal_plus_db;"
+
 
 build-job:
   stage: build
