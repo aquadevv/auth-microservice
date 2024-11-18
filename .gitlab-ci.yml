@@ -10,6 +10,7 @@ variables:
   DB_USER: root
   DB_PASSWORD: rootroot
   DB_PORT: 5432
+  SECURE_FILES_DOWNLOAD_PATH: './where/files/should/go/'
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -21,9 +22,6 @@ before_script:
   - apt-get update && apt-get install -y findutils
   - find --version
   - chmod +x ./gradlew
-
-
-
 
 build-job:
   stage: build
@@ -49,6 +47,7 @@ setup-postgres-and-test:
     - docker-compose up -d
     - until docker exec database_postgres pg_isready; do sleep 1; done
   script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - ./gradlew test
   after_script:
     - docker-compose down
