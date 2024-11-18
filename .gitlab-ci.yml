@@ -47,8 +47,5 @@ test:
   tags:
     - linux
   script:
-    - export $(cat .env | xargs)
+    - export $(cat .env)
     - ./gradlew test
-  artifacts:
-    reports:
-      junit: build/test-results/test/
