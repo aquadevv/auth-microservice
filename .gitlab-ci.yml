@@ -5,12 +5,13 @@ stages:
 build-job:
   stage: build
   script:
-    - echo "$ENV_FILE" > .env
+    - echo "$ENV_FILE" > .env  # Создаем .env файл из переменной окружения
     - docker build -t journalplus-image .
 
 test-job:
   stage: test
   script:
+    - echo "$ENV_FILE" > .env  # Создаем .env файл снова перед тестом
     - docker-compose up postgres -d
     - docker run --rm --env-file .env journalplus-image ./gradlew test
     - docker-compose down
