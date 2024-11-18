@@ -2,8 +2,8 @@ stages:
   - build
   - test
 
-variables:
-  SECURE_FILES_DOWNLOAD_PATH: './where/files/should/go/' 
+before_script:
+  - cp ${ENV_FILE} .env.ci
 
 build-job:
   stage: build
@@ -13,8 +13,5 @@ build-job:
 test-job:
   stage: test
   script:
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
-    - mv $SECURE_FILES_DOWNLOAD_PATH/.env /tmp/secure_files/.env
-    - docker run --rm -v /tmp/secure_files/.env:/app/.env journalplus-image ./gradlew test
-  dependencies:
-    - build-job
+    - cp .env.ci .env
+    - docker run --rm -v $(pwd)/.env:/app/.env journalplus-image ./gradlew test
