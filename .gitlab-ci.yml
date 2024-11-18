@@ -1,9 +1,24 @@
 stages:
-  - print-env
+  - build-job
+  - test
 
-print_environment:
-  stage: print-env
+build-job:
+  stage: build-job
   tags:
     - linux
   script:
-    - echo "Printing environment variables... $DB_URL"
+    - docker build -t journal-plus:latest
+    - docker run
+
+test-job:
+  stage: test
+  tags:
+    - linux
+  services:
+    - name: postgres:latest
+      alias: db
+      command: ["postgres", "-c", "fsync=off"]
+  script:
+    - echo "Running tests..."
+    - docker run --rm --network host -e DB_HOST=db -e DB_PORT=5432 -e DB_USER=$DB_USER -e DB_PASSWORD=$DB_PASSWORD -e DB_NAME=$DB_NAME journal-plus:latest ./gradlew test
+    - echo "Tests completed."
