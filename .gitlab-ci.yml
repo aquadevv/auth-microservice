@@ -13,8 +13,8 @@ cache:
     - .gradle/caches
 
 before_script:
-  - apt-get update && apt-get install -y findutils
-  - xargs --version
+  - apk update && apk add findutils
+  - find --version
   - chmod +x ./gradlew
 
 build-job:
