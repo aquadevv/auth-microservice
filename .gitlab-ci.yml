@@ -1,53 +1,8 @@
-image: openjdk:17-jdk-slim
-
 stages:
-  - build
-  - test
+  - print-env
 
-variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-  DB_NAME: journal_plus_db
-  DB_USER: root
-  DB_PASSWORD: rootroot
-  DB_PORT: 5432
-  SECURE_FILES_DOWNLOAD_PATH: './where/files/should/go/'
-
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - .gradle/wrapper
-    - .gradle/caches
-
-before_script:
-  - apt-get update && apt-get install -y findutils
-  - find --version
-  - chmod +x ./gradlew
-
-build-job:
-  stage: build
-  tags:
-    - linux
+print_environment:
+  stage: print-env
   script:
-    - "./gradlew clean build -x test"
-  artifacts:
-    paths:
-      - build/libs/*jar
-    expire_in: 1 week
-  only:
-    - main
-
-setup-postgres-and-test:
-  stage: test
-  tags:
-    - linux
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - docker-compose up -d
-    - until docker exec database_postgres pg_isready; do sleep 1; done
-  script:
-    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
-    - ./gradlew test
-  after_script:
-    - docker-compose down
+    - echo "Printing environment variables..."
+    - printenv
