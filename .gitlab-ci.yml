@@ -6,5 +6,4 @@ print_environment:
   tags:
     - linux
   script:
-    - echo "Printing environment variables..."
-    - printenv
+    - echo "Printing environment variables... $DB_URL"
