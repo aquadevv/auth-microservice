@@ -4,9 +4,8 @@ stages:
 
 before_script:
   - echo "Checking if .env file exists..."
-  - ls -l .env  # Проверяем, существует ли .env
-  - cp ${ENV_FILE} .env  # Копируем .env из файла
-
+  - ls -l .env
+  - cp $ENV_FILE .env
 build-job:
   stage: build
   script:
