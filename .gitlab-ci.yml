@@ -5,12 +5,12 @@ stages:
 build-job:
   stage: build
   script:
+    - echo "$ENV_FILE" > .env
     - docker build -t journalplus-image .
 
 test-job:
   stage: test
   script:
-    - docker compose up postgres -d
-    - docker run --rm journalplus-image ./gradlew test
+    - docker-compose up postgres -d
+    - docker run --rm --env-file .env journalplus-image ./gradlew test
     - docker-compose down
-
