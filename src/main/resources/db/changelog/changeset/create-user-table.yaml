@@ -14,16 +14,16 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: "journal_account"
-                  type: "BIGINT"
+                  name: journal_account
+                  type: bigint
                   constraints:
-                    referencedTableName: "user_journal_account"
-                    referencedColumnNames: "id"
+                    referencedTableName: user_journal_account
+                    referencedColumnNames: id
               - column:
-                  name: "messenger_account"
-                  type: "BIGINT"
+                  name: messenger_account
+                  type: bigint
                   constraints:
-                    referencedTableName: "user_messenger_account"
-                    referencedColumnNames: "id"
+                    referencedTableName: user_messenger_accounts
+                    referencedColumnNames: id
 
 
