@@ -4,7 +4,7 @@ databaseChangeLog:
       author: kanaoki
       changes:
         - createTable:
-            tableName: users
+            tableName: user_account
             columns:
               - column:
                   name: id
@@ -16,14 +16,18 @@ databaseChangeLog:
               - column:
                   name: journal_account
                   type: bigint
-                  constraints:
-                    referencedTableName: user_journal_account
-                    referencedColumnNames: id
               - column:
                   name: messenger_account
                   type: bigint
-                  constraints:
-                    referencedTableName: user_messenger_accounts
-                    referencedColumnNames: id
-
-
+        - addForeignKeyConstraint:
+            baseTableName: user_account
+            baseColumnNames: journal_account
+            referencedTableName: user_journal_account
+            referencedColumnNames: id
+            constraintName: fk_user_account_journal_account
+        - addForeignKeyConstraint:
+            baseTableName: user_account
+            baseColumnNames: messenger_account
+            referencedTableName: user_messenger_account
+            referencedColumnNames: id
+            constraintName: fk_user_account_messenger_account

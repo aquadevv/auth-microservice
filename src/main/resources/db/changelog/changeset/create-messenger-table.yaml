@@ -4,7 +4,7 @@ databaseChangeLog:
       author: kanaoki
       changes:
         - createTable:
-            tableName: user_messenger_accounts
+            tableName: user_messenger_account
             columns:
               - column:
                   name: id
