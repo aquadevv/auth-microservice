@@ -9,6 +9,7 @@ import ru.journalplus.journalplus.dto.LoginJournalRequest;
 
 class JournalAccountValidationApiTest {
 
+    private final Dotenv dotenv = Dotenv.load();
     private JournalAccountValidationApiClientImpl apiClient;
 
     @BeforeEach
@@ -19,8 +20,8 @@ class JournalAccountValidationApiTest {
 
     @Test
     void validateJournalAccount() {
-        String username = System.getenv("JOURNAL_USERNAME");
-        String password = System.getenv("JOURNAL_PASSWORD");
+        String username = dotenv.get("JOURNAL_USERNAME");
+        String password = dotenv.get("JOURNAL_PASSWORD");
 
         LoginJournalRequest loginRequest = new LoginJournalRequest();
         loginRequest.setUsername(username);

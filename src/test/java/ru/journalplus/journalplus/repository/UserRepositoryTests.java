@@ -5,13 +5,14 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.journalplus.journalplus.IntegrationTestBase;
 import ru.journalplus.journalplus.model.User;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
 @SpringBootTest
 @Transactional
-public class UserRepositoryTests {
+public class UserRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
