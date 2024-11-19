@@ -2,20 +2,35 @@ stages:
   - build
   - test
 
+variables:
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
 before_script:
-  - test -f "${ENV_FILE}" && echo "Файл существует" || echo "Файл не существует"
   - cp "$ENV_FILE" .env
-  - cat .env
 
-build-job:
+build:
   stage: build
+  image: 8.11.0-jdk17-alpine
   script:
-    - cat .env
-    - docker build -t journalplus-image .
+    - gradle clean build -x test
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
 
-test-job:
+test:
   stage: test
+  image: 8.11.0-jdk17-alpine
   script:
-    - docker-compose up postgresql -d
-    - docker run --rm --env-file .env journalplus-image ./gradlew test
-    - docker-compose down -v
+    - gradle test
+  artifacts:
+    when: always
+    paths:
+      - build/test-results
+      - build/reports/tests/test/index.html
+    expire_in: 1 week
