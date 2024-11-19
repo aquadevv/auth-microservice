@@ -12,7 +12,9 @@ cache:
     - .gradle/caches
 
 before_script:
+  - ls -la
   - cp "$ENV_FILE" .env
+  - ls -la
 
 build:
   stage: build
