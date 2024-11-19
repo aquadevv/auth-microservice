@@ -50,6 +50,8 @@ public class UserRepositoryTests extends IntegrationTestBase {
     void testCascadePersist() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         User user = new User();
 
@@ -61,6 +63,8 @@ public class UserRepositoryTests extends IntegrationTestBase {
     void testCascadeDelete() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         UserMessengerAccount messengerAccount = new UserMessengerAccount();
         messengerAccount.setUserMessengerId(123456L);
