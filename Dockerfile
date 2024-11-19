@@ -2,11 +2,11 @@ FROM gradle:8.11-jdk17 AS build
 
 WORKDIR /app
 
-COPY . .
+COPY build.gradle settings.gradle /app/
 
 RUN gradle build --no-daemon
 
-FROM openjdk:17-jdk-slim
+FROM openjdk:17-jre-slim
 
 WORKDIR /app
 
