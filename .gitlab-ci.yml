@@ -15,7 +15,7 @@ before_script:
 
 build:
   stage: build
-  image: 8.11.0-jdk17-alpine
+  image: gradle:8.11.0-jdk17-alpine
   script:
     - gradle clean build -x test
   artifacts:
@@ -25,7 +25,7 @@ build:
 
 test:
   stage: test
-  image: 8.11.0-jdk17-alpine
+  image: gradle:8.11.0-jdk17-alpine
   script:
     - gradle test
   artifacts:
