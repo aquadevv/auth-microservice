@@ -11,11 +11,6 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-before_script:
-  - ls -la
-  - cp "$ENV_FILE" .env
-  - ls -la
-
 build:
   stage: build
   image: gradle:8.11.0-jdk17-alpine
@@ -33,6 +28,7 @@ test:
     - name: docker:dind
       alias: docker
   before_script:
+    - cp "$ENV_FILE" .env
     - apk add --no-cache docker
   script:
     - gradle test --no-daemon --info
