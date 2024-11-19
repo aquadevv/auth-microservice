@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user
+      author: kanaoki
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: journal_account
+                  type: bigint
+                  constraints:
+                    referencedTableName: user_journal_account
+                    referencedColumnNames: id
+              - column:
+                  name: messenger_account
+                  type: bigint
+                  constraints:
+                    referencedTableName: user_messenger_accounts
+                    referencedColumnNames: id
+
+
