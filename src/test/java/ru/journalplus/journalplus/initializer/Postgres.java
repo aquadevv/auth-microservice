@@ -18,7 +18,8 @@ public class Postgres {
             TestPropertyValues.of(
                     "spring.datasource.url=" + container.getJdbcUrl(),
                     "spring.datasource.username=" + container.getUsername(),
-                    "spring.datasource.password=" + container.getPassword()
+                    "spring.datasource.password=" + container.getPassword(),
+                    "spring.liquibase.enabled=true"
             ).applyTo(applicationContext);
         }
     }
