@@ -1,17 +1,17 @@
 package ru.journalplus.journalplus.repository;
 
-
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.journalplus.journalplus.IntegrationTestBase;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
 import java.util.Optional;
 
 @SpringBootTest
 @Transactional
-public class MessengerRepositoryTests {
+public class MessengerRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private MessengerRepository messengerRepository;
