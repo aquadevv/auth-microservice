@@ -1,0 +1,44 @@
+stages:
+  - build
+  - test
+
+variables:
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=512m"
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  image: gradle:8.11.0-jdk17-alpine
+  script:
+    - gradle clean build -x test
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+
+test:
+  stage: test
+  image: gradle:8.11.0-jdk17-alpine
+  services:
+    - name: docker:dind
+      alias: docker
+  before_script:
+    - cp "$ENV_FILE" .env
+    - apk add --no-cache docker
+  script:
+    - gradle test --no-daemon --info
+  artifacts:
+    when: always
+    paths:
+      - build/test-results
+      - build/reports/tests/test/index.html
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"

@@ -1,3 +1,4 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/changeset/create-user-journal-table.yaml
+  - includeAll:
+      path: db/changelog/changeset/
+

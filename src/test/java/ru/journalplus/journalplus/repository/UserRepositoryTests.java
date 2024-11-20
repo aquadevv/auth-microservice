@@ -5,13 +5,14 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.journalplus.journalplus.IntegrationTestBase;
 import ru.journalplus.journalplus.model.User;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
 @SpringBootTest
 @Transactional
-public class UserRepositoryTests {
+public class UserRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
@@ -49,6 +50,8 @@ public class UserRepositoryTests {
     void testCascadePersist() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         User user = new User();
 
@@ -60,6 +63,8 @@ public class UserRepositoryTests {
     void testCascadeDelete() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         UserMessengerAccount messengerAccount = new UserMessengerAccount();
         messengerAccount.setUserMessengerId(123456L);
