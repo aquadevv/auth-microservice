@@ -23,6 +23,8 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
+    rules:
+      - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
 
 test:
   stage: test
@@ -40,3 +42,5 @@ test:
       - build/test-results
       - build/reports/tests/test/index.html
     expire_in: 1 week
+    rules:
+      - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
