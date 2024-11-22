@@ -15,23 +15,18 @@ build:
   stage: build
   image: gradle:8.11.0-jdk17-alpine
   script:
-    - gradle clean build -x test
+    - gradle clean build -x test --parallel
   artifacts:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+    - when: manual
 
 test:
   stage: test
   image: gradle:8.11.0-jdk17-alpine
-  services:
-    - name: docker:dind
-      alias: docker
-  before_script:
-    - cp "$ENV_FILE" .env
-    - apk add --no-cache docker
   script:
     - gradle test --no-daemon --info
   artifacts:
@@ -42,3 +37,4 @@ test:
     expire_in: 1 week
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+    - when: manual
