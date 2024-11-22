@@ -31,7 +31,7 @@ build:
       - build/libs/*.jar
     expire_in: 1 week
   rules:
-    - if: $CI_COMMIT_REF_PROTECTED == "true"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED == "true"
       when: always
     - if: $CI_PIPELINE_SOURCE == "web"
 
@@ -42,12 +42,12 @@ test:
     - cp $ENV_FILE .env
     - gradle test --no-daemon --info
   artifacts:
-    when: always
     paths:
       - build/test-results
       - build/reports/tests/test/index.html
-    expire_in: 1 week
+    reports:
+      junit: build/test-results/test/TEST-*.xml
   rules:
-    - if: $CI_COMMIT_REF_PROTECTED == "true"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_PROTECTED == "true"
       when: always
     - if: $CI_PIPELINE_SOURCE == "web"
