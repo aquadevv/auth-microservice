@@ -23,7 +23,7 @@ cache:
 
 build:
   stage: build
-  image: .default-gradle
+  extends: .default-gradle
   script:
     - gradle build -x test
   artifacts:
@@ -37,7 +37,7 @@ build:
 
 test:
   stage: test
-  image: .default-gradle
+  extends: .default-gradle
   script:
     - cp $ENV_FILE .env
     - gradle test --no-daemon --info
