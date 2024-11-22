@@ -15,6 +15,7 @@ build:
   stage: build
   image: gradle:8.11.0-jdk17-alpine
   script:
+    - cp $ENV_FILE .env
     - gradle build -x test
   artifacts:
     paths:
