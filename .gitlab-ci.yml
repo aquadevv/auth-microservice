@@ -7,13 +7,23 @@ variables:
   GRADLE_OPTS: "-Xmx2g -XX:MaxMetaspaceSize=512m"
 
 cache:
+  key: "$CI_COMMIT_REF_SLUG"
   paths:
     - .gradle/wrapper
     - .gradle/caches
 
+.default-gradle:
+  image: gradle:8.11.0-jdk17-alpine
+  before_script:
+    - echo "Using Gradle ${GRADLE_OPTS}"
+  cache:
+    policy: pull-push
+  artifacts:
+    expire_in: 1 week
+
 build:
   stage: build
-  image: gradle:8.11.0-jdk17-alpine
+  image: .default-gradle
   script:
     - gradle build -x test
   artifacts:
@@ -21,12 +31,13 @@ build:
       - build/libs/*.jar
     expire_in: 1 week
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+    - if: $CI_COMMIT_REF_PROTECTED == "true"
+      when: always
     - if: $CI_PIPELINE_SOURCE == "web"
 
 test:
   stage: test
-  image: gradle:8.11.0-jdk17-alpine
+  image: .default-gradle
   script:
     - cp $ENV_FILE .env
     - gradle test --no-daemon --info
@@ -37,5 +48,6 @@ test:
       - build/reports/tests/test/index.html
     expire_in: 1 week
   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
+    - if: $CI_COMMIT_REF_PROTECTED == "true"
+      when: always
     - if: $CI_PIPELINE_SOURCE == "web"
