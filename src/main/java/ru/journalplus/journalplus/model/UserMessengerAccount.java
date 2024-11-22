@@ -13,5 +13,5 @@ public class UserMessengerAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long UserMessengerId;
+    private Long userMessengerId;
 }
