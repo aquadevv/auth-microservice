@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user
+      author: kanaoki
+      changes:
+        - createTable:
+            tableName: user_account
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: journal_account
+                  type: bigint
+              - column:
+                  name: messenger_account
+                  type: bigint
+        - addForeignKeyConstraint:
+            baseTableName: user_account
+            baseColumnNames: journal_account
+            referencedTableName: user_journal_account
+            referencedColumnNames: id
+            constraintName: fk_user_account_journal_account
+        - addForeignKeyConstraint:
+            baseTableName: user_account
+            baseColumnNames: messenger_account
+            referencedTableName: user_messenger_account
+            referencedColumnNames: id
+            constraintName: fk_user_account_messenger_account

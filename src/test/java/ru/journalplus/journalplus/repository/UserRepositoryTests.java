@@ -5,13 +5,16 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.journalplus.journalplus.IntegrationTestBase;
 import ru.journalplus.journalplus.model.User;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
-public class UserRepositoryTests {
+class UserRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
@@ -32,34 +35,38 @@ public class UserRepositoryTests {
 
         User savedUser = userRepository.save(user);
 
-        assert savedUser.getId() != null;
-        assert savedUser.getJournalAccount() != null;
-        assert savedUser.getMessengerAccount() != null;
+        assertNotNull(savedUser.getId());
+        assertNotNull(savedUser.getJournalAccount());
+        assertNotNull(savedUser.getMessengerAccount());
 
-        assert savedUser.getMessengerAccount().getUserMessengerId() == 123456;
-        assert savedUser.getJournalAccount().getUsername().equals("journal");
-        assert savedUser.getJournalAccount().getPassword().equals("password");
+        assertEquals(123456,  savedUser.getMessengerAccount().getUserMessengerId());
+        assertEquals("journal",  savedUser.getJournalAccount().getUsername());
+        assertEquals("password", savedUser.getJournalAccount().getPassword());
 
         User loadedUser = userRepository.findById(savedUser.getId()).orElseThrow();
-        assert loadedUser.getJournalAccount().getUsername().equals("journal");
-        assert loadedUser.getMessengerAccount().getUserMessengerId() == 123456;
+        assertEquals("journal", loadedUser.getJournalAccount().getUsername());
+        assertEquals(123456, loadedUser.getMessengerAccount().getUserMessengerId());
     }
 
     @Test
     void testCascadePersist() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         User user = new User();
 
         User savedUser = userRepository.save(user);
-        assert savedUser.getId() != null;
+        assertNotNull(savedUser.getId());
     }
 
     @Test
     void testCascadeDelete() {
         UserJournalAccount journalAccount = new UserJournalAccount();
         journalAccount.setUsername("journal");
+        journalAccount.setPassword("password");
+        journalAccount.setValid(true);
 
         UserMessengerAccount messengerAccount = new UserMessengerAccount();
         messengerAccount.setUserMessengerId(123456L);
@@ -72,6 +79,6 @@ public class UserRepositoryTests {
 
         userRepository.delete(savedUser);
 
-        assert userRepository.findById(savedUser.getId()).isEmpty();
+        assertTrue(userRepository.findById(savedUser.getId()).isEmpty());
     }
 }
