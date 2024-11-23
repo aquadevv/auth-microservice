@@ -12,11 +12,7 @@ public class JournalAccountValidationService {
 
     private final JournalAccountValidationApiClient apiClient;
 
-    public boolean validateJournalAccount(String username, String password) {
-        LoginJournalRequest loginRequest = new LoginJournalRequest();
-        loginRequest.setUsername(username);
-        loginRequest.setPassword(password);
-
-        return apiClient.validateJournalAccount(loginRequest);
+    public boolean validateJournalAccount(LoginJournalRequest loginJournalRequest) {
+        return apiClient.validateJournalAccount(loginJournalRequest);
     }
 }
