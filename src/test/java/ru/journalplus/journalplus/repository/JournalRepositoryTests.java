@@ -1,5 +1,6 @@
 package ru.journalplus.journalplus.repository;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.journalplus.journalplus.IntegrationTestBase;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+
 @SpringBootTest
-public class JournalRepositoryTests extends IntegrationTestBase {
+class JournalRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private JournalRepository journalRepository;
@@ -26,7 +31,7 @@ public class JournalRepositoryTests extends IntegrationTestBase {
     @Test
     void testSaverJournalAccount() {
         UserJournalAccount savedJournalAccount = journalRepository.save(userJournalAccount);
-        assert savedJournalAccount.getId() != null;
+        assertNotNull(savedJournalAccount.getId());
         assert savedJournalAccount.getUsername().equals(userJournalAccount.getUsername());
     }
 
@@ -35,7 +40,7 @@ public class JournalRepositoryTests extends IntegrationTestBase {
         UserJournalAccount savedJournalAccount = journalRepository.save(userJournalAccount);
         journalRepository.delete(savedJournalAccount);
         UserJournalAccount deletedJournalAccount = journalRepository.findById(savedJournalAccount.getId()).orElse(null);
-        assert deletedJournalAccount == null;
+        assertNull(deletedJournalAccount);
     }
 
     @Test
@@ -43,7 +48,7 @@ public class JournalRepositoryTests extends IntegrationTestBase {
         UserJournalAccount savedJournalAccount = journalRepository.save(userJournalAccount);
         savedJournalAccount.setUsername("Naminal");
         journalRepository.save(savedJournalAccount);
-        assert savedJournalAccount.getUsername().equals("Naminal");
+        Assertions.assertEquals("Naminal", savedJournalAccount.getUsername());
 
     }
 
