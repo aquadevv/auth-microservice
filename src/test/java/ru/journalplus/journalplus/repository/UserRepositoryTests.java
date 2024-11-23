@@ -10,9 +10,11 @@ import ru.journalplus.journalplus.model.User;
 import ru.journalplus.journalplus.model.UserJournalAccount;
 import ru.journalplus.journalplus.model.UserMessengerAccount;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
-public class UserRepositoryTests extends IntegrationTestBase {
+class UserRepositoryTests extends IntegrationTestBase {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,17 +35,17 @@ public class UserRepositoryTests extends IntegrationTestBase {
 
         User savedUser = userRepository.save(user);
 
-        assert savedUser.getId() != null;
-        assert savedUser.getJournalAccount() != null;
-        assert savedUser.getMessengerAccount() != null;
+        assertNotNull(savedUser.getId());
+        assertNotNull(savedUser.getJournalAccount());
+        assertNotNull(savedUser.getMessengerAccount());
 
-        assert savedUser.getMessengerAccount().getUserMessengerId() == 123456;
-        assert savedUser.getJournalAccount().getUsername().equals("journal");
-        assert savedUser.getJournalAccount().getPassword().equals("password");
+        assertEquals(123456,  savedUser.getMessengerAccount().getUserMessengerId());
+        assertEquals("journal",  savedUser.getJournalAccount().getUsername());
+        assertEquals("password", savedUser.getJournalAccount().getPassword());
 
         User loadedUser = userRepository.findById(savedUser.getId()).orElseThrow();
-        assert loadedUser.getJournalAccount().getUsername().equals("journal");
-        assert loadedUser.getMessengerAccount().getUserMessengerId() == 123456;
+        assertEquals("journal", loadedUser.getJournalAccount().getUsername());
+        assertEquals(123456, loadedUser.getMessengerAccount().getUserMessengerId());
     }
 
     @Test
@@ -56,7 +58,7 @@ public class UserRepositoryTests extends IntegrationTestBase {
         User user = new User();
 
         User savedUser = userRepository.save(user);
-        assert savedUser.getId() != null;
+        assertNotNull(savedUser.getId());
     }
 
     @Test
@@ -77,6 +79,6 @@ public class UserRepositoryTests extends IntegrationTestBase {
 
         userRepository.delete(savedUser);
 
-        assert userRepository.findById(savedUser.getId()).isEmpty();
+        assertTrue(userRepository.findById(savedUser.getId()).isEmpty());
     }
 }
