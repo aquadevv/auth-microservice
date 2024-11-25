@@ -54,3 +54,10 @@ pmd:
   stage: lint
   script:
     - ./gradlew pmdMain
+  artifacts:
+    paths:
+      - build/reports/pmd/pmd.xml
+      - build/reports/pmd/pmd.html
+    reports:
+      junit: build/reports/pmd/pmd.xml
+  allow_failure: true
