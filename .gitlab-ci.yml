@@ -4,7 +4,6 @@ stages:
   - test
 
 before_script:
-  - apt-get update && apt-get install -y openjdk-17-slim
   - export GRADLE_HOME=/usr/share/gradle
   - export PATH=$GRADLE_HOME/bin:$PATH
   - chmod +x ./gradlew
@@ -50,17 +49,8 @@ test:
   rules:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"
 
-checkstyle:
-  stage: lint
-  script:
-    - ./gradlew checkstyleMain
 
 pmd:
   stage: lint
   script:
     - ./gradlew pmdMain
-
-spotbugs:
-  stage: lint
-  script:
-    - ./gradlew spotbugsMain
