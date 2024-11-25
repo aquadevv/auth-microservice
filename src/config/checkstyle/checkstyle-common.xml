@@ -1,3 +1,0 @@
-<module name="FileLength">
-    <property name="max" value="1"/>
-</module>
