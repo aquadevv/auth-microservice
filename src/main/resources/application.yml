@@ -31,3 +31,12 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.basicbinder: DEBUG
+    org.springframework.security: DEBUG
+
+token:
+  signing:
+    key: ${SIGNING_SECRET_KEY}
+  access:
+    expiration: 900000
+  refresh:
+    expiration: 604800000
