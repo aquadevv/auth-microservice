@@ -4,11 +4,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 import io.github.cdimascio.dotenv.DotenvEntry;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-
+@Slf4j
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(
@@ -30,7 +31,7 @@ public class JournalPlusApplication {
         try {
             dotenv = Dotenv.load();
         } catch (Exception e) {
-            System.out.println(".env file not found, proceeding without it.");
+            log.warn(".env file not found, proceeding without it.");
         }
 
         if (dotenv != null) {
